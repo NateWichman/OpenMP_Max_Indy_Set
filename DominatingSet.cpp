@@ -95,20 +95,20 @@ int main() {
     }
   }
   // Print the adjacency matrix
-  /*
+ 
   for(int i = 0;i < n;i++) {
     for(int j = 0;j < n;j++) {
       cout << (adjacencyMatrix[i][j]) << " ";
     }
     cout << endl;
   }
-  */
+  
   long twoToN = 1;
   for(int i = 0;i < n;i++) {
     twoToN = twoToN * 2;
   }
 
-  int minNumberBits = n;
+  int maxNumberBits = 0;
   int result = twoToN - 1;
   //#pragma omp parallel for schedule(dynamic)
 #pragma omp parallel for 
@@ -117,13 +117,13 @@ int main() {
     if (isDominatingSet(e,n,adjacencyMatrix)) {
 #pragma omp critical
       {
-	if (bitsIn1(e,n) < minNumberBits) {
-	  minNumberBits = bitsIn1(e,n);
+	if (bitsIn1(e,n) > maxNumberBits) {
+	  maxNumberBits = bitsIn1(e,n);
 	  result = e;
 	}
       }
     }
   }
   cout << "Result: " << result << " with " <<  
-    minNumberBits << " elements" << endl;
+    maxNumberBits << " elements" << endl;
 }
