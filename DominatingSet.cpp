@@ -10,6 +10,7 @@
 
 #include <iostream>
 #include <omp.h>
+#include <set>
 using namespace std;
 
 /* Return true if the long x encodes
@@ -22,7 +23,27 @@ bool isDominatingSet(const long x,const int n, int **adjacencyMatrix) {
   /* Calculate which vertices belong to the set
      encoded by the value x
   */
-  for(int i=0;i < n;i++) {
+  
+  std::set<int> verticesInSet2;
+
+  for(int i = 0; i < n; i++){
+	if((x & mask) != 0){
+		verticesInSet2.insert(i);
+	}
+	mask = mask * 2;
+  }
+
+  for(int i : verticesInSet2){
+	for(int j: verticesInSet2){
+		if(j != i && adjacencyMatrix[i][j] == 1){
+			return false;
+		}
+	}
+  }
+
+  return true;
+
+ /* for(int i=0;i < n;i++) {
     if ((x & mask) != 0) {
       verticesInSet[i] = 1;
       verticesCovered[i] = 1;
@@ -33,11 +54,12 @@ bool isDominatingSet(const long x,const int n, int **adjacencyMatrix) {
     }
     mask = mask * 2;
   }	
-  /* 
+  
      Check for all nodes if:
      - They belong to the dominating set
      - or they are connected to a node in the dominating set
   */
+  /*
   for(int i = 0;i < n;i++) {
     // Check if node i is adjacent
     // to a node in verticesInSet
@@ -60,14 +82,15 @@ bool isDominatingSet(const long x,const int n, int **adjacencyMatrix) {
   // System.out.println("Inside isDominatingSet - argument "+x);
   return true;
 }
-
-// Return the number of bits that contain 1 in the value x
+*/
+}
+//Return the number of bits that contain 1 in the value x
 int bitsIn1( long x,int n ) {
   long mask = 1;
   int result = 0;
-  /* Calculate which vertices belong to the set
-     encoded by the value x
-  */
+ /*  Calculate which vertices belong to the set
+     encoded by the value x */
+  
   for(int i=0;i < n;i++) {
     if ((x & mask) != 0) {
       result++;
