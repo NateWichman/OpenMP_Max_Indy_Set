@@ -21,7 +21,7 @@ bool isDominatingSet(const long x,const int n, int **adjacencyMatrix) {
   /* Calculate which vertices belong to the set
      encoded by the value x
   */
-  
+  //I essentially converted over my code from the Java version of this project to c++
   std::set<int> verticesInSet;
 
   for(int i = 0; i < n; i++){
