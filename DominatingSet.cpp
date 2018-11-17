@@ -17,24 +17,22 @@ using namespace std;
    a subset that is a dominating set
 */
 bool isDominatingSet(const long x,const int n, int **adjacencyMatrix) {
-  int verticesInSet[n];
-  int verticesCovered[n];
   long mask = 1;
   /* Calculate which vertices belong to the set
      encoded by the value x
   */
   
-  std::set<int> verticesInSet2;
+  std::set<int> verticesInSet;
 
   for(int i = 0; i < n; i++){
 	if((x & mask) != 0){
-		verticesInSet2.insert(i);
+		verticesInSet.insert(i);
 	}
 	mask = mask * 2;
   }
 
-  for(int i : verticesInSet2){
-	for(int j: verticesInSet2){
+  for(int i : verticesInSet){
+	for(int j: verticesInSet){
 		if(j != i && adjacencyMatrix[i][j] == 1){
 			return false;
 		}
